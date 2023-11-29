@@ -1,9 +1,9 @@
-var exec = require('cordova/exec');
+const exec = require('cordova/exec');
 
-var DeviceInfoPlugin = {
-    getDeviceInfo: function(successCallback, errorCallback) {
-        exec(successCallback, errorCallback, 'OSPlugin', 'getDeviceInfo', []);
+let OSPlugin = {
+    showToast: (message, duration, successCallback, errorCallback) => {
+        exec(successCallback, errorCallback, 'OSPlugin', 'showToast', [message, duration]);
     }
 };
 
-module.exports = DeviceInfoPlugin;
+module.exports = OSPlugin;
