@@ -1,30 +1,31 @@
-package com.example.osplugin;
+package com.example.deviceinfo;
 
-import android.widget.Toast;
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
 import org.json.JSONArray;
 import org.json.JSONException;
+import android.os.Build;
 
 public class OSPlugin extends CordovaPlugin {
 
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-        if ("showToast".equals(action)) {
-            String message = args.getString(0);
-            int duration = args.getInt(1);
-            showToast(message, duration);
-            callbackContext.success();
+        if (action.equals("getDeviceInfo")) {
+            this.getDeviceInfo(callbackContext);
             return true;
         }
         return false;
     }
 
-    private void showToast(final String message, final int duration) {
-        cordova.getActivity().runOnUiThread(new Runnable() {
-            public void run() {
-                Toast.makeText(cordova.getActivity(), message, duration).show();
-            }
-        });
+    private void getDeviceInfo(CallbackContext callbackContext) {
+        try {
+            String deviceModel = Build.MODEL;
+            String devicePlatform = "Android";
+            String osVersion = Build.VERSION.RELEASE;
+
+            callbackContext.success("Model: " + deviceModel + "\nPlatform: " + devicePlatform + "\nOS Version: " + osVersion);
+        } catch (Exception e) {
+            callbackContext.error("An error occured: " + e.getMessage());
+        }
     }
 }
