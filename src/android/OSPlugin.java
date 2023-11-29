@@ -1,4 +1,4 @@
-package com.example.OSPlugin;
+package com.example.osplugin;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
